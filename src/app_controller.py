@@ -3,6 +3,8 @@ from clock_view import ClockView
 from mode_cycle import ModeCycle
 from stopwatch import Stopwatch, StopwatchView
 import tkinter as tk
+import json
+import os
 
 class AppController:
     def __init__(self, root, canvas, theme, widgets):
@@ -19,6 +21,8 @@ class AppController:
         self._last_theme = None
         self._last_mode = None
         self._time_offset = timedelta(0)
+        self._state_file = "app_state.json"
+        self._load_state()
         self._is_editing_time = False
         
         self._sw = Stopwatch()
@@ -36,7 +40,27 @@ class AppController:
         self._widgets["btn_m_plus"].config(command=self.add_minute)
         self._widgets["btn_m_minus"].config(command=self.sub_minute)
         self._canvas.bind("<Button-3>", self._secondary_action)
-        
+
+    def _load_state(self):
+        if os.path.exists(self._state_file):
+            try:
+                with open(self._state_file, 'r') as f:
+                    data = json.load(f)
+                    if 'time_offset_seconds' in data:
+                        self._time_offset = timedelta(seconds=data['time_offset_seconds'])
+            except Exception as e:
+                print(f"Error loading state: {e}")
+
+    def _save_state(self):
+        data = {
+            'time_offset_seconds': self._time_offset.total_seconds()
+        }
+        try:
+            with open(self._state_file, 'w') as f:
+                json.dump(data, f)
+        except Exception as e:
+            print(f"Error saving state: {e}")
+            
     def start(self):
         self._tick()
         
@@ -126,19 +150,24 @@ class AppController:
 
     def sync_time(self):
         self._time_offset = timedelta(0)
+        self._save_state()
         self.disable_edit_time()
 
     def add_hour(self):
         self._time_offset += timedelta(hours=1)
+        self._save_state()
 
     def sub_hour(self):
         self._time_offset -= timedelta(hours=1)
+        self._save_state()
 
     def add_minute(self):
         self._time_offset += timedelta(minutes=1)
+        self._save_state()
 
     def sub_minute(self):
         self._time_offset -= timedelta(minutes=1)
+        self._save_state()
 
     def toggle_theme(self):
         self._current_theme = "dark" if self._current_theme == "day" else "day"
