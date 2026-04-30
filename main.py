@@ -44,26 +44,24 @@ def main():
     bottom_frame = tk.Frame(root, bg=bg_color)
     bottom_frame.pack(fill=tk.X, padx=24, pady=(0, 20))
     
-    btn_theme = tk.Button(bottom_frame, text="THEME", font=("Bahnschrift SemiBold", 13),
-                           bg=theme.get("button_fill"), fg=theme.get("button_text"),
-                           activebackground=theme.get("button_fill"),
-                           activeforeground=theme.get("button_text"),
-                           relief=tk.FLAT, borderwidth=0, highlightthickness=2,
-                           padx=15, pady=12, cursor="hand2")
-                           
-    btn_action = tk.Button(bottom_frame, text="START", font=("Bahnschrift SemiBold", 13),
-                           bg=theme.get("button_fill"), fg=theme.get("button_text"),
-                           activebackground=theme.get("button_fill"),
-                           activeforeground=theme.get("button_text"),
-                           relief=tk.FLAT, borderwidth=0, highlightthickness=2,
-                           padx=15, pady=12, cursor="hand2")
+    def create_btn(text):
+        return tk.Button(bottom_frame, text=text, font=("Bahnschrift SemiBold", 13),
+                         bg=theme.get("button_fill"), fg=theme.get("button_text"),
+                         activebackground=theme.get("button_fill"),
+                         activeforeground=theme.get("button_text"),
+                         relief=tk.FLAT, borderwidth=0, highlightthickness=2,
+                         padx=15, pady=12, cursor="hand2")
 
-    btn_reset = tk.Button(bottom_frame, text="RESET", font=("Bahnschrift SemiBold", 13),
-                           bg=theme.get("button_fill"), fg=theme.get("button_text"),
-                           activebackground=theme.get("button_fill"),
-                           activeforeground=theme.get("button_text"),
-                           relief=tk.FLAT, borderwidth=0, highlightthickness=2,
-                           padx=15, pady=12, cursor="hand2")
+    btn_theme = create_btn("THEME")
+    btn_action = create_btn("START")
+    btn_reset = create_btn("RESET")
+    btn_set_time = create_btn("SET TIME")
+    btn_h_plus = create_btn("+ H")
+    btn_h_minus = create_btn("- H")
+    btn_m_plus = create_btn("+ M")
+    btn_m_minus = create_btn("- M")
+    btn_sync_time = create_btn("SYNC")
+    btn_done_time = create_btn("DONE")
     
     widgets = {
         "top_frame": top_frame,
@@ -73,7 +71,14 @@ def main():
         "btn_next": btn_next,
         "btn_theme": btn_theme,
         "btn_action": btn_action,
-        "btn_reset": btn_reset
+        "btn_reset": btn_reset,
+        "btn_set_time": btn_set_time,
+        "btn_h_plus": btn_h_plus,
+        "btn_h_minus": btn_h_minus,
+        "btn_m_plus": btn_m_plus,
+        "btn_m_minus": btn_m_minus,
+        "btn_sync_time": btn_sync_time,
+        "btn_done_time": btn_done_time
     }
     
     app = AppController(root, canvas, theme, widgets)
