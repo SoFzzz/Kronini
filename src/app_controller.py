@@ -3,7 +3,6 @@ from clock_view import ClockView
 from mode_cycle import ModeCycle
 from stopwatch import Stopwatch, StopwatchView
 import tkinter as tk
-import json
 import os
 
 class AppController:
@@ -21,7 +20,7 @@ class AppController:
         self._last_theme = None
         self._last_mode = None
         self._time_offset = timedelta(0)
-        self._state_file = "app_state.json"
+        self._state_file = "app_state.txt"
         self._load_state()
         self._is_editing_time = False
         
@@ -45,19 +44,16 @@ class AppController:
         if os.path.exists(self._state_file):
             try:
                 with open(self._state_file, 'r') as f:
-                    data = json.load(f)
-                    if 'time_offset_seconds' in data:
-                        self._time_offset = timedelta(seconds=data['time_offset_seconds'])
+                    content = f.read().strip()
+                    if content:
+                        self._time_offset = timedelta(seconds=float(content))
             except Exception as e:
                 print(f"Error loading state: {e}")
 
     def _save_state(self):
-        data = {
-            'time_offset_seconds': self._time_offset.total_seconds()
-        }
         try:
             with open(self._state_file, 'w') as f:
-                json.dump(data, f)
+                f.write(str(self._time_offset.total_seconds()))
         except Exception as e:
             print(f"Error saving state: {e}")
             
