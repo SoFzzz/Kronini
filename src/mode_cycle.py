@@ -4,7 +4,7 @@ class Node:
         self.next = None
         self.prev = None
 
-class CircularDoublyLinkedList:
+class ModeCycle:
     def __init__(self):
         self.head = None
         self.current = None

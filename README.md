@@ -9,7 +9,7 @@ Kronini is a premium analog clock application built entirely in Python using the
 - **Chronograph (Stopwatch)**: A functional stopwatch mode with its own digital display and dedicated controls.
 - **Dynamic Date**: Real-time date display in Spanish (e.g., LUN 27).
 - **Navigation**: Use the arrows to switch between the main Clock and the Chronograph.
-- **Custom UI**: Built using a Circular Doubly-Linked List for efficient mode switching.
+- **Custom UI**: Built using a custom Mode Cycle data structure for efficient mode switching.
 
 ## Project Structure
 
@@ -17,9 +17,8 @@ Kronini is a premium analog clock application built entirely in Python using the
 - `app_controller.py`: Main logic coordinator and UI state manager.
 - `clock_view.py`: Rendering logic for the analog clock face and hands.
 - `stopwatch.py`: Stopwatch model and view logic.
-- `circular_list.py`: Data structure for circular navigation between modes.
+- `mode_cycle.py`: Data structure for circular navigation between modes.
 - `theme.py`: Design tokens and color palettes for Day/Dark themes.
-- `alarm.py`: (Optional) Alarm model and settings view.
 
 ## Requirements
 

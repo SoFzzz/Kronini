@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from clock_view import ClockView
-from circular_list import CircularDoublyLinkedList
+from mode_cycle import ModeCycle
 from stopwatch import Stopwatch, StopwatchView
 import tkinter as tk
 
@@ -11,7 +11,7 @@ class AppController:
         self._theme = theme
         self._widgets = widgets
         
-        self._modes = CircularDoublyLinkedList()
+        self._modes = ModeCycle()
         self._modes.append("clock")
         self._modes.append("stopwatch")
         
